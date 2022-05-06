@@ -1,0 +1,18 @@
+﻿@page "/"
+@using webShop.Model
+
+
+
+<h1>Hello World, product = @_shopItem.Name</h1>
+
+@code{
+    public ShopItem _shopItem {get;set;}
+
+    protected override async Task OnInitializedAsync(){
+        base.OnInitializedAsync();
+
+        _shopItem = new ShopItem{
+            Name = "test"
+        };
+    }
+}
