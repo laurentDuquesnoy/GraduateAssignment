@@ -9,10 +9,19 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0" PrivateAssets="all" />
+    <PackageReference Include="microsoft.entityframeworkcore" Version="6.0.4" />
+    <PackageReference Include="microsoft.entityframeworkcore.inmemory" Version="6.0.4" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\webShop.Abstractions\webShop.Abstractions.csproj" />
     <ProjectReference Include="..\webShop.Model\webShop.Model.csproj" />
+    <ProjectReference Include="..\webShop.Repository\webShop.Repository.csproj" />
+    <ProjectReference Include="..\webShop.Services\webShop.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Assets" />
   </ItemGroup>
 
 </Project>
