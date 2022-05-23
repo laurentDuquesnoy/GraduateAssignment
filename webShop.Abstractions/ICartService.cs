@@ -1,0 +1,10 @@
+using webShop.Model;
+
+namespace webShop.Abstractions;
+
+public interface ICartService
+{
+    int GetNumberOfItemsInCart();
+    void AddToCart(ShopItem item);
+    IList<ShopItem> GetItems();
+}

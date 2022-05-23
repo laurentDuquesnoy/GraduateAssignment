@@ -2,6 +2,8 @@
     display: flex;
     flex-direction: column;
     max-width: 100vw;
+    margin: 1rem;
+
 }
 
 .header__wrapper{
@@ -13,6 +15,18 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
+}
+
+.cart__wrapper{
+    display: flex;
+    flex-flow: row-reverse;
+    align-items: center;
+    
+    
+}
+
+.cart__count{
+    text-align: center;
 }
 
 .item__wrapper{
@@ -30,5 +44,26 @@
 
 .item__name{
     font-size: 2rem;
-    
+}
+
+.item__text--wrapper{
+    display: grid;
+    grid-template-areas: "name name"
+                        "description description"
+                        "price addButton";
+}
+
+.item__name{
+    grid-area: name;
+}
+
+.item__description{
+    grid-area: description;
+}
+.item__price{
+    grid-area: price;
+}
+
+.item__button{
+    grid-area: addButton;
 }

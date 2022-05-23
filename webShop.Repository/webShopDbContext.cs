@@ -30,7 +30,7 @@ public class WebShopDbContext : DbContext
                 Name = "Oneplus 10 Pro",
                 Description = "Oneplus's latest bombshell flagship",
                 Price = 1000,
-                ImagePath = "Assets/oneplus_10Pro.jpg"
+                ImagePath = "Assets/oneplus_10pro.jpg"
             }
         );
         ShopItems.Add(

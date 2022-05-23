@@ -3,6 +3,8 @@
 @using webShop.Model
 @using webShop.Abstractions
 @inject IItemService _itemsService
+@inject ICartService _CartService
+
 @inject NavigationManager _navigationManager
 
 <article class="main__wrapper">
@@ -46,7 +48,10 @@
 
     private async Task AddToCartAsync(int itemId)
     {
-        //todo implement cartservice
+        var item = await _itemsService.GetByIdAsync(itemId);
+        _CartService.AddToCart(item);
+        Count = _CartService.GetNumberOfItemsInCart();
+        StateHasChanged();
     }
 
     private  void NavigateToCart()  
