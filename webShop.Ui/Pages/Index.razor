@@ -3,30 +3,41 @@
 @using webShop.Model
 @using webShop.Abstractions
 @inject IItemService _itemsService
+@inject NavigationManager _navigationManager
 
-
-<h1>Laurent's tech shop</h1>
-<h2>Current items for sale:</h2>
-<div class="items__wrapper">
-    @foreach (var item in _shopItems)
-    {
-        <div class="item__wrapper">
-            <img src="@item.ImagePath" alt="@item.Name">
-            <div class="item__text--wrapper">
-                <h3 class="item__name">@item.Name</h3>
-                <p class="item__description">@item.Description</p>
-                <p class="item__price">@item.Price</p>
-                <p class="item__button" @onclick="async () => await AddToCartAsync(item.Id)">Add To Cart</p>
-            </div>
+<article class="main__wrapper">
+    <section class="header__wrapper">
+        <div class="title__wrapper">
+            <h1>Laurent's tech shop</h1>
         </div>
-    }
-</div>
+        <div class="cart__wrapper" @onclick="NavigateToCart">
+            <img src="Assets/cart.svg" alt="cart">
+            <p class="cart__count">@Count</p>
+        </div>
+    </section>
+    <section class="items__wrapper">
+        @foreach (var item in _shopItems)
+        {
+            <div class="item__wrapper">
+                <img class="item__image" src="@item.ImagePath" alt="@item.Name">
+                <div class="item__text--wrapper">
+                    <h3 class="item__name">@item.Name</h3>
+                    <p class="item__description">@item.Description</p>
+                    <p class="item__price">@item.Price</p>   
+                    <p class="item__button" @onclick="async () => await AddToCartAsync(item.Id)">Add To Cart</p>
+                </div>
+            </div>
+        }
+    </section>
+
+</article>
 
 
 @code{
-    private List<ShopItem>? _shopItems { get; set; }
+    private List<ShopItem> _shopItems { get; set; } = new(); 
+    private int Count { get; set; } = 0;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()  
     {
         await base.OnInitializedAsync();
         _shopItems = await _itemsService.GetItemsAsync();
@@ -36,6 +47,11 @@
     private async Task AddToCartAsync(int itemId)
     {
         //todo implement cartservice
+    }
+
+    private  void NavigateToCart()  
+    {
+        _navigationManager.NavigateTo("Cart");
     }
 
 }

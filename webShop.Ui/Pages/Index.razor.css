@@ -1,0 +1,34 @@
+﻿.main__wrapper{
+    display: flex;
+    flex-direction: column;
+    max-width: 100vw;
+}
+
+.header__wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+
+.items__wrapper{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+.item__wrapper{
+    width: 28%;
+    border: 1px solid #008000;
+}
+
+.item__image{
+    width: 100%;
+}
+
+.item__price{
+    
+}
+
+.item__name{
+    font-size: 2rem;
+    
+}

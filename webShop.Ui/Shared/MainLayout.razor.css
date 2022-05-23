@@ -1,8 +1,9 @@
 .page {
-    position: relative;
     display: flex;
-    flex-direction: column;
+    height: 100vh;
 }
+
+
 
 main {
     flex: 1;
@@ -78,4 +79,10 @@ main {
         padding-left: 2rem !important;
         padding-right: 1.5rem !important;
     }
+}
+
+footer{
+    text-align: center;
+    margin-top: auto;
+    padding-bottom: .7rem;
 }

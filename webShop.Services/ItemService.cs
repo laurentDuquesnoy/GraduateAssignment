@@ -16,7 +16,11 @@ public class ItemService : IItemService
 
     public async Task<List<ShopItem>> GetItemsAsync()
     {
-        var itemsList = await _dbContext.ShopItems.ToListAsync();
-        return itemsList;
+        return await _dbContext.ShopItems.ToListAsync();
     }
 }
+
+
+
+
+

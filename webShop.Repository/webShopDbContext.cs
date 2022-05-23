@@ -21,7 +21,7 @@ public class WebShopDbContext : DbContext
                 Name = "IPhone 13",
                 Description = "All-round Apple flagship device backing ground-breaking technology",
                 Price = 800,
-                ImagePath = "Assets/iphone_13.png"
+                ImagePath = "Assets/iphone_13.jpg"
             }
         );
         ShopItems.Add(
@@ -30,7 +30,7 @@ public class WebShopDbContext : DbContext
                 Name = "Oneplus 10 Pro",
                 Description = "Oneplus's latest bombshell flagship",
                 Price = 1000,
-                ImagePath = "Assets/oneplus_10Pro.webp"
+                ImagePath = "Assets/oneplus_10Pro.jpg"
             }
         );
         ShopItems.Add(
@@ -42,5 +42,6 @@ public class WebShopDbContext : DbContext
                 ImagePath = "Assets/samsung_galaxy_s22Ultra.webp"
             }
         );
+        SaveChanges();
     }
 }
