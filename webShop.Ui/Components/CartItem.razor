@@ -1,0 +1,15 @@
+<li class="cart__item">
+    <p class="cart__item--remove" @onclick=""></p>
+    <p class="cart__item--name">@ItemName</p>
+</li>
+
+@code {
+    [Parameter]
+    public int ItemId { get; set; }
+    [Parameter]
+    public string? ItemName { get; set; }
+    [Parameter]
+    public double ItemPrice { get; set; }
+    [Parameter]
+    public EventCallback<MouseEventArgs> RemoveFromCart { get; set; }
+}

@@ -1,0 +1,23 @@
+@page "/Cart"
+@using webShop.Abstractions
+@using webShop.Model
+
+@inject ICartService _CartService;
+
+<h3>Your shopping Cart</h3>
+<ul class="shop__items--wrapper">
+    
+</ul>
+
+
+@code {
+    private List<ShopItem> ShopItems { get; set; } = new List<ShopItem>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        ShopItems =  _CartService.GetItems().ToList();
+    }
+    
+    
+}

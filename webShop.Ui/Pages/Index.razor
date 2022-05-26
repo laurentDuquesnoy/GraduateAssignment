@@ -3,7 +3,7 @@
 @using webShop.Model
 @using webShop.Abstractions
 @inject IItemService _itemsService
-@inject ICartService _CartService
+@inject ICartService _cartService
 
 @inject NavigationManager _navigationManager
 
@@ -18,7 +18,7 @@
         </div>
     </section>
     <section class="items__wrapper">
-        @foreach (var item in _shopItems)
+        @foreach (var item in ShopItems)
         {
             <div class="item__wrapper">
                 <img class="item__image" src="@item.ImagePath" alt="@item.Name">
@@ -36,21 +36,22 @@
 
 
 @code{
-    private List<ShopItem> _shopItems { get; set; } = new(); 
-    private int Count { get; set; } = 0;
+    private List<ShopItem> ShopItems { get; set; } = new(); 
+    private int Count { get; set; }
 
     protected override async Task OnInitializedAsync()  
     {
         await base.OnInitializedAsync();
-        _shopItems = await _itemsService.GetItemsAsync();
+        ShopItems = await _itemsService.GetItemsAsync();
+        Count = _cartService.GetNumberOfItemsInCart();
         StateHasChanged();
     }
 
     private async Task AddToCartAsync(int itemId)
     {
         var item = await _itemsService.GetByIdAsync(itemId);
-        _CartService.AddToCart(item);
-        Count = _CartService.GetNumberOfItemsInCart();
+        _cartService.AddToCart(item);
+        Count = _cartService.GetNumberOfItemsInCart();
         StateHasChanged();
     }
 
