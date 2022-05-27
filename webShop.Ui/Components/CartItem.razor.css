@@ -1,0 +1,20 @@
+.cart__item--wrapper{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem 0 1rem;
+    height: 4rem;
+    align-items: center;
+    font-weight: bold;
+}
+.cart__item--wrapper:nth-child(odd){
+    background-color: darkgrey;
+}
+.cart__item--remove{
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.cart__item--remove:hover{
+    cursor: pointer;
+    
+}

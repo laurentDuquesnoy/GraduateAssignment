@@ -26,6 +26,7 @@
     private void RemoveItem(int id)
     {
         CartService.RemoveFromCart(id);
+        ShopItems = CartService.GetItems().ToList();
         StateHasChanged();
     }
     

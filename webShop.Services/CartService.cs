@@ -29,4 +29,9 @@ public class CartService : ICartService
         if (shopItem != null && ShopItems.Contains(shopItem))
             ShopItems.Remove(shopItem);
     }
+
+    public double CalculateTotal()
+    {
+        return ShopItems.Sum(x => x.Price);
+    }
 }
