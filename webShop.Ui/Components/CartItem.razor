@@ -1,15 +1,20 @@
+@using webShop.Model
+
 <li class="cart__item">
-    <p class="cart__item--remove" @onclick=""></p>
-    <p class="cart__item--name">@ItemName</p>
+    <p class="cart__item--remove" @onclick="HandleClick">x</p>
+    <p class="cart__item--name">@ShopItem.Name</p>
+    <p class="cart__item--price">@ShopItem.Price</p>
 </li>
 
 @code {
     [Parameter]
-    public int ItemId { get; set; }
+    public ShopItem ShopItem { get; set; } = new();
+    
     [Parameter]
-    public string? ItemName { get; set; }
-    [Parameter]
-    public double ItemPrice { get; set; }
-    [Parameter]
-    public EventCallback<MouseEventArgs> RemoveFromCart { get; set; }
+    public EventCallback<int> RemoveFromCart { get; set; }
+
+    private async Task HandleClick()
+    {
+        await RemoveFromCart.InvokeAsync(ShopItem.Id);
+    }
 }

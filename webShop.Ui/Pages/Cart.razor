@@ -1,12 +1,16 @@
 @page "/Cart"
 @using webShop.Abstractions
 @using webShop.Model
+@using webShop.Ui.Components
 
-@inject ICartService _CartService;
+@inject ICartService CartService;
 
 <h3>Your shopping Cart</h3>
 <ul class="shop__items--wrapper">
-    
+    @foreach (var item in ShopItems)
+    {   
+        <CartItem ShopItem=@item RemoveFromCart=@RemoveItem></CartItem>
+    }
 </ul>
 
 
@@ -16,8 +20,13 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        ShopItems =  _CartService.GetItems().ToList();
+        ShopItems =  CartService.GetItems().ToList();
     }
-    
+
+    private void RemoveItem(int id)
+    {
+        CartService.RemoveFromCart(id);
+        StateHasChanged();
+    }
     
 }
