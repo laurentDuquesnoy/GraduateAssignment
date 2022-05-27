@@ -21,4 +21,12 @@ public class CartService : ICartService
     {
         return ShopItems;
     }
+
+    public void RemoveFromCart(int id)
+    {
+        var shopItem = ShopItems.FirstOrDefault(x => x.Id == id);
+        
+        if (shopItem != null && ShopItems.Contains(shopItem))
+            ShopItems.Remove(shopItem);
+    }
 }
