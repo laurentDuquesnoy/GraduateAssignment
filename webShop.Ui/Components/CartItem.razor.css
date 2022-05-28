@@ -1,3 +1,4 @@
+
 .cart__item--wrapper{
     display: flex;
     justify-content: space-between;
@@ -7,7 +8,7 @@
     font-weight: bold;
 }
 .cart__item--wrapper:nth-child(odd){
-    background-color: darkgrey;
+    background-color: rgba(131, 166, 155, 0.46);
 }
 .cart__item--remove{
     font-size: 1.8rem;
@@ -16,5 +17,4 @@
 
 .cart__item--remove:hover{
     cursor: pointer;
-    
 }

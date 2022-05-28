@@ -6,28 +6,64 @@
 @inject ICartService CartService;
 
 <h3>Your shopping Cart</h3>
-<ul class="shop__items--wrapper">
-    @foreach (var item in ShopItems)
-    {   
-        <CartItem ShopItem=@item RemoveFromCart=@RemoveItem></CartItem>
-    }
-</ul>
+<article class="cart__wrapper">
+    <ul class="cart__items--wrapper">
+        @foreach (var item in ShopItems)
+        {   
+            <CartItem ShopItem=@item RemoveFromCart=@RemoveItem></CartItem>
+        }
+    </ul>
+    <section class="cart__checkout--wrapper">
+        <p class="cart__checkout--button">Pay and check out</p>
+        <p class="cart__checkout--total">Grand total: @CartTotal</p>
+        <div class="cart__paymentMethod--wrapper">
+            <div class="cart__paymentMeth @(SelectedPaymentMethod == 1 ? "selected" : "")"
+                 @onclick="() => ChangePaymentMethod(1)">
+                <p class="cart__paymentMethod--name">MasterCard</p>
+                <img class="cart__paymentMethod--image" src="Assets/masterCard.png" alt="MasterCard"/>
+            </div>
+            <div class="cart__paymentMethod selected  @(SelectedPaymentMethod == 2 ? "selected" : "")"
+                 @onclick="() => ChangePaymentMethod(2)">
+                <p class="cart__paymentMethod--name">Paypal</p>
+                <img class="cart__paymentMethod--image" src="Assets/paypal.png" alt="PayPal"/>
+            </div>
+            <div class="cart__paymentMethod selected  @(SelectedPaymentMethod == 3 ? "selected" : "")"
+                 @onclick="() => ChangePaymentMethod(3)">
+                <p class="cart__paymentMethod--name">Maestro</p>
+                <img class="cart__paymentMethod--image" src="Assets/maestro.png" alt="Maestro"/>
+            </div>
+        </div>
+    </section>
+</article>
 
 
 @code {
-    private List<ShopItem> ShopItems { get; set; } = new List<ShopItem>();
-
+    private List<ShopItem> ShopItems { get; set; } = new();
+    private double CartTotal { get; set; }
+    private int SelectedPaymentMethod { get; set; }
+    
+    //todo checkout
+    
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
+        
+        SelectedPaymentMethod = 1;
         ShopItems =  CartService.GetItems().ToList();
+        CartTotal = CartService.CalculateTotal();
     }
 
     private void RemoveItem(int id)
     {
         CartService.RemoveFromCart(id);
         ShopItems = CartService.GetItems().ToList();
+        CartTotal = CartService.CalculateTotal();
         StateHasChanged();
     }
-    
+
+    private void ChangePaymentMethod(int method)
+    {
+        SelectedPaymentMethod = method;
+        StateHasChanged();
+    }
 }

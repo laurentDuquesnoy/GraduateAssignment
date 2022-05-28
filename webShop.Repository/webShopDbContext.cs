@@ -1,5 +1,6 @@
 using webShop.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 
 namespace webShop.Repository;
@@ -21,7 +22,7 @@ public class WebShopDbContext : DbContext
                 Name = "IPhone 13",
                 Description = "All-round Apple flagship device backing ground-breaking technology",
                 Price = 800,
-                ImagePath = "Assets/iphone_13.jpg"
+                ImagePath = "Assets/iphone_13.png"
             }
         );
         ShopItems.Add(
@@ -30,7 +31,7 @@ public class WebShopDbContext : DbContext
                 Name = "Oneplus 10 Pro",
                 Description = "Oneplus's latest bombshell flagship",
                 Price = 1000,
-                ImagePath = "Assets/oneplus_10pro.jpg"
+                ImagePath = "Assets/oneplus_10pro.png"
             }
         );
         ShopItems.Add(

@@ -31,12 +31,18 @@
 
 .item__wrapper{
     width: 28%;
-    border: 4px solid rgba(0, 255, 175, 0.46);
-    background-color: rgba(0, 255, 175, 0.46);
+    display: flex;
+    flex-flow: column;
+    
+    justify-content: space-between;
+    background-color: rgba(131, 166, 155, 0.46);
+    background-color: #F9E148;
 }
 
 .item__image{
     width: 100%;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
 .item__text--wrapper{
@@ -50,16 +56,35 @@
     grid-area: name;
     text-align: center;
     font-size: 2rem;
-    
+    font-weight: bolder;
 }
 
 .item__description{
     grid-area: description;
+    text-align: center;
 }
 .item__price{
     grid-area: price;
+    text-align: center;
+    font-size: 1.7rem;
+    font-weight: bold;
+    
+}
+
+.item__price::before{
+    content: "€";
 }
 
 .item__button{
     grid-area: addButton;
+    font-size: 1.7rem;
+    font-weight: bold;
+    text-align: center;
+    
+    transition: .2s all;
+}
+
+.item__button:hover{
+    cursor: pointer;
+    text-decoration: underline;
 }
