@@ -9,30 +9,31 @@
 <article class="cart__wrapper">
     <ul class="cart__items--wrapper">
         @foreach (var item in ShopItems)
-        {   
+        {
             <CartItem ShopItem=@item RemoveFromCart=@RemoveItem></CartItem>
         }
     </ul>
     <section class="cart__checkout--wrapper">
-        <p class="cart__checkout--button">Pay and check out</p>
         <p class="cart__checkout--total">Grand total: @CartTotal</p>
         <div class="cart__paymentMethod--wrapper">
-            <div class="cart__paymentMeth @(SelectedPaymentMethod == 1 ? "selected" : "")"
+            <div class="cart__paymentMethod @(SelectedPaymentMethod == 1 ? "selected" : "")"
                  @onclick="() => ChangePaymentMethod(1)">
                 <p class="cart__paymentMethod--name">MasterCard</p>
                 <img class="cart__paymentMethod--image" src="Assets/masterCard.png" alt="MasterCard"/>
             </div>
-            <div class="cart__paymentMethod selected  @(SelectedPaymentMethod == 2 ? "selected" : "")"
+            <div class="cart__paymentMethod   @(SelectedPaymentMethod == 2 ? "selected" : "")"
                  @onclick="() => ChangePaymentMethod(2)">
                 <p class="cart__paymentMethod--name">Paypal</p>
                 <img class="cart__paymentMethod--image" src="Assets/paypal.png" alt="PayPal"/>
             </div>
-            <div class="cart__paymentMethod selected  @(SelectedPaymentMethod == 3 ? "selected" : "")"
+            <div class="cart__paymentMethod   @(SelectedPaymentMethod == 3 ? "selected" : "")"
                  @onclick="() => ChangePaymentMethod(3)">
                 <p class="cart__paymentMethod--name">Maestro</p>
                 <img class="cart__paymentMethod--image" src="Assets/maestro.png" alt="Maestro"/>
             </div>
         </div>
+        <p class="cart__checkout--button" @onclick="Checkout">Pay and check out</p>
+
     </section>
 </article>
 
@@ -41,15 +42,15 @@
     private List<ShopItem> ShopItems { get; set; } = new();
     private double CartTotal { get; set; }
     private int SelectedPaymentMethod { get; set; }
-    
+
     //todo checkout
-    
+
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        
+
         SelectedPaymentMethod = 1;
-        ShopItems =  CartService.GetItems().ToList();
+        ShopItems = CartService.GetItems().ToList();
         CartTotal = CartService.CalculateTotal();
     }
 
@@ -65,5 +66,27 @@
     {
         SelectedPaymentMethod = method;
         StateHasChanged();
+    }
+
+    private void Checkout()
+    {
+        if (CartService.GetNumberOfItemsInCart() == 0)
+            return;
+        
+        var paymentMethod = string.Empty;
+        switch (SelectedPaymentMethod)
+        {
+            case 1:
+                paymentMethod = "MasterCard";
+                break;
+            case 2:
+                paymentMethod = "PayPal";
+                break;
+            case 3:
+                paymentMethod = "Maestro";
+                break;
+        }
+        
+        CartService.SetPaymentMethod(paymentMethod);
     }
 }

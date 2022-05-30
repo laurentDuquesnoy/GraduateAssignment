@@ -6,6 +6,7 @@ namespace webShop.Services;
 public class CartService : ICartService
 {
     private List<ShopItem> ShopItems { get; set; }
+    private string? PaymentMethod { get; set; }
 
     public CartService()
     {
@@ -33,5 +34,14 @@ public class CartService : ICartService
     public double CalculateTotal()
     {
         return ShopItems.Sum(x => x.Price);
+    }
+
+    public void SetPaymentMethod(string method)
+    {
+        PaymentMethod = method;
+    }
+    public string GetPaymentMethod()
+    {
+        return PaymentMethod ?? string.Empty;
     }
 }
