@@ -1,7 +1,48 @@
-h1 {
-    font-size: 1.5rem;
+.order__title {
+    margin: 1rem;
+    text-align: center;
 }
 
-.order__wrapper{
-  display: flex;
+.order__info--wrapper {
+    font-size: .9rem;
+    text-align: center;
+    line-height: .8rem;
+}
+
+.order__wrapper {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    flex-flow: column;
+    align-items: center;
+
+}
+
+
+
+.order__form--error{
+    color: red;
+}
+.order__form--errors{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.order__form--submit {
+    background-color: #f9e148;
+    padding:  .5rem 0 .5rem 0;
+    
+    text-align: center;
+    font-weight: bold;
+    border: 3px solid transparent;
+    transition: .2s all;
+    margin-top: -1rem;
+}
+
+.order__form--submit:hover{
+    border: 3px solid #f9e148;
+    background-color: transparent;
+    text-decoration: underline;
+    cursor: pointer;
 }

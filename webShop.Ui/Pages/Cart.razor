@@ -4,6 +4,7 @@
 @using webShop.Ui.Components
 
 @inject ICartService CartService;
+@inject NavigationManager NavigationManager;
 
 <h3>Your shopping Cart</h3>
 <article class="cart__wrapper">
@@ -74,6 +75,6 @@
             return;
 
         CartService.SetPaymentMethod(SelectedPaymentMethod);
-        
+        NavigationManager.NavigateTo("/Checkout");
     }
 }

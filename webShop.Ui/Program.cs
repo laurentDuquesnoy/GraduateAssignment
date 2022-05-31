@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using webShop.Repository;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.InMemory;
 using webShop.Ui;
 using webShop.Services;
 using webShop.Abstractions;
@@ -19,5 +18,6 @@ builder.Services.AddDbContext<WebShopDbContext>(options =>
 
 builder.Services.AddTransient<IItemService, ItemService>();
 builder.Services.AddSingleton<ICartService, CartService>();
+builder.Services.AddTransient<IOrderService, OrderService>();
 
 await builder.Build().RunAsync();

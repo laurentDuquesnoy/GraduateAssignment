@@ -7,20 +7,30 @@
 @inject ICartService CartService;
 @inject NavigationManager NavigationManager
 
-@(OrderSuccess ?  "<h1 class=\"order__success\">Order Successfully placed!</h1>" : "<h1 class=\"order__title\">Place your order</h1>")
+<h3 class="order__title@(OrderSuccess ? "order__success" : "")">
+    @(OrderSuccess ? "Order Successfully placed!" : "Place your order")
+</h3>
 <article class="order__wrapper">
     <section class="order__info--wrapper">
         <p class="order__info">Payment method: @PaymentMethod</p>
         <p class="order__info">Total: @Total</p>
     </section>
-    <EditForm class="order__form--wrapper" Model="Customer" OnSubmit="HandleFormSubmit">
-        <div class="order__form--name">
-            <InputText @bind-Value="Customer.FirstName" class="order__form--input"></InputText>
-            <InputText @bind-Value="Customer.LastName" class="order__form--input"></InputText>
-        </div>
-        <InputText @bind-Value="Customer.Email" class="order__form--input"></InputText>
-        <InputText @bind-Value="Customer.Address" class="order__form--input"></InputText>
+    <EditForm class="order__form--wrapper" Model="_customer" OnSubmit="HandleFormSubmit">
+        <div class="order__form--inputs">
+            <InputText @bind-Value="_customer.FirstName"
+                       class="order__form--input short" placeholder="First Name">
+            </InputText>
+            <InputText @bind-Value="_customer.LastName"
+                       class="order__form--input short" placeholder="Last Name">
+            </InputText>
 
+            <InputText @bind-Value="_customer.Email"
+                       class="order__form--input long" placeholder="E-mail">
+            </InputText>
+            <InputText @bind-Value="_customer.Address"
+                       class="order__form--input long" placeholder="Address">
+            </InputText>
+        </div>  
         <ul class="order__form--errors">
             @if (_errors != null)
             {
@@ -38,10 +48,11 @@
     private PaymentMethod PaymentMethod { get; set; }
     private double Total { get; set; }
     private bool OrderSuccess { get; set; }
-    
-    private Customer? Customer { get; set; }
+
+    private Customer? _customer = new Customer();
+
     private List<string>? _errors = new List<string>();
-    
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -69,13 +80,13 @@
     {
         var order = new Order
         {
-            Customer = Customer,
+            Customer = _customer,
             Items = CartService.GetItems().ToList(),
             TimeStamp = DateTime.Now
         };
-        
+
         var result = await OrderService.PlaceOrderAsync(order);
-        
+
         if (result.IsSuccess)
             HandleSuccessfulResult();
 
@@ -86,17 +97,17 @@
     private bool ValidateFormAndIndicateSuccess()
     {
         _errors = new List<string>();
-        
-        if(string.IsNullOrEmpty(Customer?.FirstName))
+
+        if (string.IsNullOrEmpty(_customer?.FirstName))
             _errors.Add("please fill in your first name.");
-        if(string.IsNullOrEmpty(Customer?.LastName))
+        if (string.IsNullOrEmpty(_customer?.LastName))
             _errors.Add("please fill in your last name.");
-        if(string.IsNullOrEmpty(Customer?.Email))
+        if (string.IsNullOrEmpty(_customer?.Email))
             _errors.Add("please fill in your last name.");
-        if(string.IsNullOrEmpty(Customer?.Address))
+        if (string.IsNullOrEmpty(_customer?.Address))
             _errors.Add("please fill in your address.");
 
         return !_errors.Any();
-
     }
+
 }
