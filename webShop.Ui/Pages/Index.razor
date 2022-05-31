@@ -2,10 +2,10 @@
 
 @using webShop.Model
 @using webShop.Abstractions
-@inject IItemService _itemsService
-@inject ICartService _cartService
+@inject IItemService ItemsService
+@inject ICartService CartService
 
-@inject NavigationManager _navigationManager
+@inject NavigationManager NavigationManager
 
 <article class="main__wrapper">
     <section class="header__wrapper">
@@ -42,22 +42,22 @@
     protected override async Task OnInitializedAsync()  
     {
         await base.OnInitializedAsync();
-        ShopItems = await _itemsService.GetItemsAsync();
-        Count = _cartService.GetNumberOfItemsInCart();
+        ShopItems = await ItemsService.GetItemsAsync();
+        Count = CartService.GetNumberOfItemsInCart();
         StateHasChanged();
     }
 
     private async Task AddToCartAsync(int itemId)
     {
-        var item = await _itemsService.GetByIdAsync(itemId);
-        _cartService.AddToCart(item);
-        Count = _cartService.GetNumberOfItemsInCart();
+        var item = await ItemsService.GetByIdAsync(itemId);
+        CartService.AddToCart(item);
+        Count = CartService.GetNumberOfItemsInCart();
         StateHasChanged();
     }
 
     private  void NavigateToCart()  
     {
-        _navigationManager.NavigateTo("Cart");
+        NavigationManager.NavigateTo("Cart");
     }
 
 }

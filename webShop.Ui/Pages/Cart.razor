@@ -72,21 +72,16 @@
     {
         if (CartService.GetNumberOfItemsInCart() == 0)
             return;
-        
-        var paymentMethod = string.Empty;
-        switch (SelectedPaymentMethod)
+
+        var paymentMethod = SelectedPaymentMethod switch
         {
-            case 1:
-                paymentMethod = "MasterCard";
-                break;
-            case 2:
-                paymentMethod = "PayPal";
-                break;
-            case 3:
-                paymentMethod = "Maestro";
-                break;
-        }
-        
+            1 => "MasterCard",
+            2 => "PayPal",
+            3 => "Maestro",
+            _ => string.Empty
+            };
+
         CartService.SetPaymentMethod(paymentMethod);
+        
     }
 }

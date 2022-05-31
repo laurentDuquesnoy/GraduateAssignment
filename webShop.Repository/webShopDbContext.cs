@@ -1,3 +1,4 @@
+using System.Data.Common;
 using webShop.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -8,11 +9,27 @@ namespace webShop.Repository;
 public class WebShopDbContext : DbContext
 {
     public DbSet<ShopItem> ShopItems { get; set; }
+    public DbSet<Customer> Customers { get; set; }
+    public DbSet<Order> Orders { get; set; }
 
     public WebShopDbContext(DbContextOptions<WebShopDbContext> options) : base(options)
     {
         Seed();
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Order>()
+            .HasOne(x => x.Customer)
+            .WithMany(x => x.Orders);
+
+        modelBuilder.Entity<Order>()
+            .HasMany(s => s.Items);
+
+    }
+
 
     private void Seed()
     {
