@@ -7,7 +7,7 @@
 @inject ICartService CartService;
 @inject NavigationManager NavigationManager
 
-<h3 class="order__title@(OrderSuccess ? "order__success" : "")">
+<h3 class="order__title @(OrderSuccess ? " order__success" : "")">
     @(OrderSuccess ? "Order Successfully placed!" : "Place your order")
 </h3>
 <article class="order__wrapper">
@@ -68,14 +68,6 @@
         await PlaceOrderAsync();
     }
 
-    private void HandleSuccessfulResult()
-    {
-        OrderSuccess = true;
-        StateHasChanged();
-        Thread.Sleep(2500);
-        NavigationManager.NavigateTo("/");
-    }
-
     private async Task PlaceOrderAsync()
     {
         var order = new Order
@@ -88,10 +80,18 @@
         var result = await OrderService.PlaceOrderAsync(order);
 
         if (result.IsSuccess)
-            HandleSuccessfulResult();
+            await HandleSuccessfulResult();
 
         _errors = result.Errors;
         StateHasChanged();
+    }
+
+    private async Task HandleSuccessfulResult()
+    {
+        OrderSuccess = true;
+        StateHasChanged();
+        await Task.Delay(3000);
+        NavigationManager.NavigateTo("/");
     }
 
     private bool ValidateFormAndIndicateSuccess()

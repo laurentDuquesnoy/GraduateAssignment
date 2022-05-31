@@ -3,6 +3,10 @@
     text-align: center;
 }
 
+.order__success{
+    color: #f9e148;
+}
+
 .order__info--wrapper {
     font-size: .9rem;
     text-align: center;

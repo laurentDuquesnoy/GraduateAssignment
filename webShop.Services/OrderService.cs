@@ -18,8 +18,8 @@ public class OrderService : IOrderService
         var lastOrderByUser = await
             _webShopDbContext.Orders.Where(x => x.Customer == order.Customer)
                 .OrderByDescending(x => x.TimeStamp)
-                .FirstAsync();
-        if (lastOrderByUser.Items == order.Items)
+                .FirstOrDefaultAsync();
+        if (lastOrderByUser?.Items == order.Items)
             return new ServiceResult<Order> { Errors = new List<string> { "You already placed such an order" } };
         
         var placedOrder = await _webShopDbContext.Orders.AddAsync(order);

@@ -64,6 +64,12 @@ a, .btn-link {
 }
 
 
+.order__form--wrapper{
+    display: flex;
+    flex-flow: column;
+}
+
+
 .order__form--inputs {
     display: flex;
     flex-flow: wrap;
@@ -81,9 +87,4 @@ a, .btn-link {
 .long{
     width: 100%;
     
-}
-
-.order__form--wrapper{
-    display: flex;
-    flex-flow: column;
 }
