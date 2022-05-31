@@ -4,7 +4,7 @@ namespace webShop.Abstractions;
 
 public interface IOrderService
 {
-    public Task<ServiceResult<Order>> PlaceOrderAsync();
-    public Task<ServiceResult<Order>> GetOrderAsync();
-    public Task<ServiceResult<Order>> CancelOrderAsync();
+    public Task<ServiceResult<Order>> PlaceOrderAsync(Order order);
+    public Task<ServiceResult<Order>> GetOrderAsync(Order order);
+    public Task<ServiceResult<Order>> CancelOrderAsync(Order order);
 }

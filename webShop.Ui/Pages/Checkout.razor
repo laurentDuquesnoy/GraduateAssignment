@@ -1,0 +1,102 @@
+@page "/Checkout"
+
+@using webShop.Abstractions
+@using webShop.Model
+
+@inject IOrderService OrderService;
+@inject ICartService CartService;
+@inject NavigationManager NavigationManager
+
+@(OrderSuccess ?  "<h1 class=\"order__success\">Order Successfully placed!</h1>" : "<h1 class=\"order__title\">Place your order</h1>")
+<article class="order__wrapper">
+    <section class="order__info--wrapper">
+        <p class="order__info">Payment method: @PaymentMethod</p>
+        <p class="order__info">Total: @Total</p>
+    </section>
+    <EditForm class="order__form--wrapper" Model="Customer" OnSubmit="HandleFormSubmit">
+        <div class="order__form--name">
+            <InputText @bind-Value="Customer.FirstName" class="order__form--input"></InputText>
+            <InputText @bind-Value="Customer.LastName" class="order__form--input"></InputText>
+        </div>
+        <InputText @bind-Value="Customer.Email" class="order__form--input"></InputText>
+        <InputText @bind-Value="Customer.Address" class="order__form--input"></InputText>
+
+        <ul class="order__form--errors">
+            @if (_errors != null)
+            {
+                foreach (var error in _errors)
+                {
+                    <p class="order__form--error">@error</p>
+                }
+            }
+        </ul>
+        <input type="submit" class="order__form--submit" value="Place Order">
+    </EditForm>
+</article>
+
+@code {
+    private PaymentMethod PaymentMethod { get; set; }
+    private double Total { get; set; }
+    private bool OrderSuccess { get; set; }
+    
+    private Customer? Customer { get; set; }
+    private List<string>? _errors = new List<string>();
+    
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        PaymentMethod = CartService.GetPaymentMethod();
+        Total = CartService.GetCartTotal();
+    }
+
+    private async Task HandleFormSubmit()
+    {
+        if (!ValidateFormAndIndicateSuccess())
+            return;
+        await PlaceOrderAsync();
+    }
+
+    private void HandleSuccessfulResult()
+    {
+        OrderSuccess = true;
+        StateHasChanged();
+        Thread.Sleep(2500);
+        NavigationManager.NavigateTo("/");
+    }
+
+    private async Task PlaceOrderAsync()
+    {
+        var order = new Order
+        {
+            Customer = Customer,
+            Items = CartService.GetItems().ToList(),
+            TimeStamp = DateTime.Now
+        };
+        
+        var result = await OrderService.PlaceOrderAsync(order);
+        
+        if (result.IsSuccess)
+            HandleSuccessfulResult();
+
+        _errors = result.Errors;
+        StateHasChanged();
+    }
+
+    private bool ValidateFormAndIndicateSuccess()
+    {
+        _errors = new List<string>();
+        
+        if(string.IsNullOrEmpty(Customer?.FirstName))
+            _errors.Add("please fill in your first name.");
+        if(string.IsNullOrEmpty(Customer?.LastName))
+            _errors.Add("please fill in your last name.");
+        if(string.IsNullOrEmpty(Customer?.Email))
+            _errors.Add("please fill in your last name.");
+        if(string.IsNullOrEmpty(Customer?.Address))
+            _errors.Add("please fill in your address.");
+
+        return !_errors.Any();
+
+    }
+}
