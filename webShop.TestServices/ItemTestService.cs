@@ -4,7 +4,7 @@ namespace webShop.TestServices;
 
 public static class ItemTestService
 {
-    public static List<ShopItem> GenerateShopList()
+    public static List<ShopItem> GenerateItemList()
     {
         return new List<ShopItem>
         {

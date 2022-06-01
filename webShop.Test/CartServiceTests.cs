@@ -11,7 +11,7 @@ public class CartServiceTests
     public void CheckThatCartServiceSurvivesRemovalOfNonexistentItem()
     {
         var cartService = new CartService();
-        foreach (var item in ItemTestService.GenerateShopList())
+        foreach (var item in ItemTestService.GenerateItemList())
         {
             cartService.AddToCart(item);
         }
