@@ -5,6 +5,8 @@
         <Nullable>enable</Nullable>
 
         <IsPackable>false</IsPackable>
+
+        <RootNamespace>webShop.FakeItEasy</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -19,6 +21,12 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\webShop.Services\webShop.Services.csproj" />
+      <ProjectReference Include="..\webShop.Model\webShop.Model.csproj" />
+      <ProjectReference Include="..\webShop.TestServices\webShop.TestServices.csproj" />
     </ItemGroup>
 
 </Project>
