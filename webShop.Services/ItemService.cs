@@ -8,21 +8,20 @@ namespace webShop.Services;
 
 public class ItemService : IItemService
 {
-    private WebShopDbContext DbContext { get; set; }
-
-    public ItemService(WebShopDbContext dbContext)
+    private readonly IDatabaseService _databaseService;
+    public ItemService(IDatabaseService databaseService)
     {
-        DbContext = dbContext;
+        _databaseService = databaseService;
     }
 
     public async Task<List<ShopItem>> GetItemsAsync()
     {
-        return await DbContext.ShopItems.ToListAsync();
+        return await _databaseService.GetItemsAsync();
     }
 
     public async Task<ShopItem> GetByIdAsync(int id)
     {
-        var item = await DbContext.ShopItems.FirstOrDefaultAsync(x => x.Id == id);
+        var item = await _databaseService.GetItemByIdAsync(id);
         if (item != null)
             return item;
         throw new InvalidOperationException();

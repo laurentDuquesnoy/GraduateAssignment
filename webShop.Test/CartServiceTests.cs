@@ -3,7 +3,7 @@ using webShop.Services;
 using webShop.TestServices;
 using Xunit;
 
-namespace webShop.FakeItEasy;
+namespace webShop.Test;
 
 public class CartServiceTests
 {
@@ -11,12 +11,12 @@ public class CartServiceTests
     public void CheckThatCartServiceSurvivesRemovalOfNonexistentItem()
     {
         var cartService = new CartService();
-        foreach (var item in ItemTestService.GenerateItemList())
+        foreach (var item in TestDataFactory.GenerateItemList())
         {
             cartService.AddToCart(item);
         }
         
         cartService.RemoveFromCart(int.MaxValue);
-        Assert.Equal(2, cartService.GetNumberOfItemsInCart());
+        Assert.Equal(3, cartService.GetNumberOfItemsInCart());
     }
 }

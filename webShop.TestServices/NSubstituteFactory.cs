@@ -7,7 +7,7 @@ public static class NSubstituteFactory
 {
     public static IItemService GenerateItemService()
     {
-        var itemsList = ItemTestService.GenerateItemList();
+        var itemsList = TestDataFactory.GenerateItemList();
         var itemService = Substitute.For<IItemService>();
 
         itemService.GetItemsAsync().Returns(itemsList);

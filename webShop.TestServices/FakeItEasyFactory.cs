@@ -9,7 +9,7 @@ public class FakeItEasyFactory
 {
     public static IItemService GenerateItemService()
     {
-        var itemsList = ItemTestService.GenerateItemList();
+        var itemsList = TestDataFactory.GenerateItemList();
         var itemService = A.Fake<IItemService>();
         var item = A.Fake<ShopItem>();
 

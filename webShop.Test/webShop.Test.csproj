@@ -6,7 +6,7 @@
 
         <IsPackable>false</IsPackable>
 
-        <RootNamespace>webShop.FakeItEasy</RootNamespace>
+        <RootNamespace>webShop.Test</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

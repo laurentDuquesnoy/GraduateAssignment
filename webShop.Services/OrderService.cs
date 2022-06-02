@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using webShop.Abstractions;
 using webShop.Model;
@@ -7,32 +8,33 @@ namespace webShop.Services;
 
 public class OrderService : IOrderService
 {
-    private readonly WebShopDbContext _webShopDbContext;
+    private readonly IDatabaseService _databaseService;
 
-    public OrderService(WebShopDbContext webShopDbContext)
+    public OrderService(IDatabaseService databaseService)
     {
-        _webShopDbContext = webShopDbContext;
+        _databaseService = databaseService;
     }
+
     public async Task<ServiceResult<Order>> PlaceOrderAsync(Order order)
     {
-        var lastOrderByUser = await
-            _webShopDbContext.Orders.Where(x => x.Customer == order.Customer)
-                .OrderByDescending(x => x.TimeStamp)
-                .FirstOrDefaultAsync();
-        if (lastOrderByUser?.Items == order.Items)
+        var orders = await _databaseService.GetOrdersAsync();
+        var lastOrderByUser = orders.Where(x => x.Customer?.Id == order.Customer?.Id).MaxBy(x => x.TimeStamp);
+        if (lastOrderByUser?.TimeStamp - order?.TimeStamp <= TimeSpan.FromMinutes(5) &&
+            lastOrderByUser?.Items.Count == order?.Items.Count)
             return new ServiceResult<Order> { Errors = new List<string> { "You already placed such an order" } };
-        
-        var placedOrder = await _webShopDbContext.Orders.AddAsync(order);
-        await _webShopDbContext.SaveChangesAsync();
-        
-        return new ServiceResult<Order> { Value = placedOrder.Entity };
-    }
 
-    public async Task<ServiceResult<Order>> GetOrderAsync(Order order)
-    {
-        var placedOrder = await _webShopDbContext.Orders.FirstOrDefaultAsync(x => x == order);
+        var placedOrder = await _databaseService.CreateOrderAsync(order);
+        await _databaseService.SaveChangesAsync();
+
         return new ServiceResult<Order> { Value = placedOrder };
     }
+
+    public async Task<ServiceResult<Order>> GetOrderByIdAsync(int id)
+    {
+        var placedOrder = await _databaseService.GetOrderByIdAsync(id);
+        return new ServiceResult<Order> { Value = placedOrder };
+    }
+
 
     public Task<ServiceResult<Order>> CancelOrderAsync(Order order)
     {

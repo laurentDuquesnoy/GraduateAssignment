@@ -19,5 +19,6 @@ builder.Services.AddDbContext<WebShopDbContext>(options =>
 builder.Services.AddTransient<IItemService, ItemService>();
 builder.Services.AddSingleton<ICartService, CartService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
+builder.Services.AddTransient<IDatabaseService, DatabaseService>();
 
 await builder.Build().RunAsync();
