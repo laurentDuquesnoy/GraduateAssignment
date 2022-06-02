@@ -89,6 +89,7 @@
     private async Task HandleSuccessfulResult()
     {
         OrderSuccess = true;
+        CartService.ClearCart();
         StateHasChanged();
         await Task.Delay(3000);
         NavigationManager.NavigateTo("/");

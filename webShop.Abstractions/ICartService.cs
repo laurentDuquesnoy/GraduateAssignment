@@ -10,5 +10,6 @@ public interface ICartService
     void RemoveFromCart(int id);
     double GetCartTotal();
     void SetPaymentMethod(PaymentMethod method);
+    void ClearCart();
     PaymentMethod GetPaymentMethod();
 }

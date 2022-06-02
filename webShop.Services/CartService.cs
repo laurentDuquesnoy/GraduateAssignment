@@ -44,4 +44,6 @@ public class CartService : ICartService
     {
         return PaymentMethod ?? Model.PaymentMethod.MasterCard;
     }
+
+    public void ClearCart() => ShopItems.Clear();
 }
